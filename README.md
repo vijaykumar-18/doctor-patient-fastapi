@@ -1,85 +1,129 @@
 # Doctor and Patient API
 
 ## Project Overview
-Doctor and Patient API A simple REST API built using Python and FastAPI to manage doctors and patients.
 
-Technologies Used
+This project is a simple REST API developed using FastAPI to manage doctor and patient records.
 
-Python 3.9+
-FastAPI
-Pydantic
-Uvicorn
-In-memory storage
-Features
+The API supports creating and retrieving doctors and patients with data validation using Pydantic.
 
-Doctor APIs
+## Technologies Used
 
-Method	Endpoint	Description
-POST	/doctors	Create a doctor
-GET	/doctors	List all doctors
-GET	/doctors/{doctor_id}	Get doctor by ID
-Doctor fields:
+* Python
+* FastAPI
+* Pydantic
+* Uvicorn
+* In-memory storage
 
-name
-specialization
-email
-is_active
-is_active is true by default.
+## Features
 
-Patient APIs
+### Doctor APIs
 
-Method	Endpoint	Description
-POST	/patients	Create a patient
-GET	/patients	List all patients
-Patient fields:
+* Create a doctor
+* Get all doctors
+* Get a doctor by ID
 
-name
-age
-phone
-Validation
+### Patient APIs
 
-The application includes the following validation:
+* Create a patient
+* Get all patients
 
-Email must be valid.
-Patient age must be greater than 0.
-Pydantic models are used for request validation.
-HTTPException is used for proper error handling.
-A 404 error is returned when a requested doctor does not exist.
-Installation
+## API Endpoints
 
-Step 1: Open the project folder
+| Method | Endpoint               | Description                      |
+| ------ | ---------------------- | -------------------------------- |
+| POST   | `/doctors`             | Create a new doctor              |
+| GET    | `/doctors`             | Get all doctors                  |
+| GET    | `/doctors/{doctor_id}` | Get doctor by ID                 |
+| POST   | `/patients`            | Create a new patient             |
+| GET    | `/patients`            | Get all patients                 |
+| GET    | `/`                    | Check whether the API is running |
 
-cd fastapi_doctor_patient
-Step 2: Install dependencies
+## Validation
 
-pip install -r requirements.txt
-Step 3: Run the application
+The project uses Pydantic for validation.
 
-uvicorn main:app --reload
-The API will start at:
+### Doctor
 
-http://127.0.0.1:8000
-API Documentation
+* Name is required
+* Specialization is required
+* Email must be valid
+* `is_active` defaults to `true`
 
-FastAPI automatically provides interactive API documentation.
+### Patient
 
-Open:
+* Name is required
+* Age must be greater than 0
+* Phone number is required
 
+## Error Handling
+
+The API uses `HTTPException` for handling errors.
+
+For example, if a doctor ID does not exist:
+
+```json
+{
+  "detail": "Requested doctor was not found"
+}
+```
+
+The API returns a `404` status code.
+
+## How to Run
+
+### 1. Create and activate the virtual environment
+
+```bash
+python -m venv venv
+```
+
+Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+### 2. Install required packages
+
+```bash
+pip install fastapi uvicorn email-validator
+```
+
+### 3. Start the FastAPI server
+
+```bash
+python -m uvicorn main:app --reload
+```
+
+### 4. Open Swagger UI
+
+Open the following URL in your browser:
+
+```text
 http://127.0.0.1:8000/docs
-You can test all the API endpoints using Swagger UI.
+```
 
-Example Doctor Request
+Swagger UI can be used to test all the API endpoints.
 
-{
-  "name": "Dr. Shankar",
-  "specialization": "Neurology",
-  "email": "Shankar.doctor@gmail.com",
-  "is_active": true
-}
-Example Patient Request
+## Project Structure
 
-{
-  "name": "sampath",
-  "age": 24,
-  "phone": "9123456789"
-}
+```text
+doctor-patient-fastapi/
+│
+├── main.py
+├── README.md
+├── .gitignore
+└── venv/
+```
+
+The `venv` folder should not be uploaded to GitHub.
+
+## Storage
+
+This project uses in-memory Python lists to store doctor and patient information.
+
+The data will be lost when the application is restarted.
+
+## Author
+
+Vijay Kumar
